@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Vector;
 
 public class Game extends JPanel implements Runnable {
     public static final int TIME_DELTA = 10;
@@ -17,6 +18,7 @@ public class Game extends JPanel implements Runnable {
     private Window wnd;
 
     private Pacman pacman;
+    private Vector<Wall> walls;
 
     public Game(Window wnd) {
         super(true);
@@ -24,6 +26,8 @@ public class Game extends JPanel implements Runnable {
         this.wnd = wnd;
 
         pacman = new Pacman(50, 50, this);
+        walls = new Vector<>();
+        walls.add(new Wall(this, 50, 50));
 
         KeyboardListener keyboardListener = new KeyboardListener(this);
         addKeyListener(keyboardListener);
@@ -37,6 +41,10 @@ public class Game extends JPanel implements Runnable {
         g.setColor(Color.BLACK);
 
         pacman.paint(g);
+
+        for (Wall wall: walls) {
+            wall.paint(g);
+        }
     }
 
     @Override

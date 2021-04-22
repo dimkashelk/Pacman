@@ -12,7 +12,7 @@ public class Wall {
         this.game = game;
         this.x = x;
         this.y = y;
-        ImageIcon wall = new ImageIcon(this.getClass().getResource("Images/wall.png"));
+        ImageIcon wall = new ImageIcon(this.getClass().getResource("Images/wall-red.png"));
         this.wall = wall.getImage();
     }
 
