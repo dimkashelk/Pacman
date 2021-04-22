@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 import java.util.Vector;
 
 public class Game extends JPanel implements Runnable {
@@ -26,8 +27,10 @@ public class Game extends JPanel implements Runnable {
         this.wnd = wnd;
 
         pacman = new Pacman(50, 50, this);
+
+        int wall_type = (new Random()).nextInt() % 4;
         walls = new Vector<>();
-        walls.add(new Wall(this, 50, 50));
+        walls.add(new Wall(this, 50, 50, wall_type));
 
         KeyboardListener keyboardListener = new KeyboardListener(this);
         addKeyListener(keyboardListener);
