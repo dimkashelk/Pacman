@@ -30,6 +30,16 @@ public class Game extends JPanel implements Runnable {
 
         int wall_type = (new Random()).nextInt() % 4;
         walls = new Vector<>();
+
+        Vector<Vector<Integer>> roads = new Vector<>();
+        for (int i = 0; i < wnd.getHeight() / (pacman.HEIGHT + 2); i++) {
+            Vector<Integer> dop = new Vector<>();
+            for (int j = 0; j < wnd.getWidth() / (pacman.WIDTH + 2); j++) {
+                dop.add(0);
+            }
+            roads.add(dop);
+        }
+
         walls.add(new Wall(this, 50, 50, wall_type));
 
         KeyboardListener keyboardListener = new KeyboardListener(this);
@@ -45,7 +55,7 @@ public class Game extends JPanel implements Runnable {
 
         pacman.paint(g);
 
-        for (Wall wall: walls) {
+        for (Wall wall : walls) {
             wall.paint(g);
         }
     }

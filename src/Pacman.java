@@ -7,6 +7,9 @@ public class Pacman implements Hero {
     private Image pacman_up;
     private Image pacman_down;
 
+    public static int WIDTH;
+    public static int HEIGHT;
+
     private Game game;
 
     private int direction;
@@ -31,6 +34,8 @@ public class Pacman implements Hero {
         this.pacman_down = pacman_down.getImage();
         MOVE_X = pacman_right.getIconWidth();
         MOVE_Y = pacman_right.getIconHeight();
+        WIDTH = pacman_down.getIconWidth();
+        HEIGHT = pacman_down.getIconHeight();
     }
 
     @Override
