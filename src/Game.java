@@ -20,6 +20,7 @@ public class Game extends JPanel implements Runnable {
 
     private Pacman pacman;
     private Vector<Wall> walls;
+    private Vector<Vector<Integer>> roads;
 
     public Game(Window wnd) {
         super(true);
@@ -38,6 +39,8 @@ public class Game extends JPanel implements Runnable {
         }
 
         initArea(roads);
+
+        this.roads = roads;
 
         for (int i = 0; i < roads.size(); i++) {
             boolean fl = false;
@@ -151,5 +154,13 @@ public class Game extends JPanel implements Runnable {
     public void setMode(int status) {
         this.IS_GAMING = status;
         repaint();
+    }
+
+    public int getCell(int x, int y) {
+        return roads.get(x).get(y);
+    }
+
+    public Dimension getSize() {
+        return new Dimension(roads.size(), roads.get(0).size());
     }
 }

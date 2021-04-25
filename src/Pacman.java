@@ -55,6 +55,21 @@ public class Pacman implements Hero {
         } else if (direction == Game.RIGHT) {
             x += MOVE_X;
         }
+        if (x < 0 ||
+                x > 40 * (game.getSize().height - 1) ||
+                y < 0 ||
+                y > 40 * (game.getSize().width - 1) ||
+                game.getCell(y / 40, x / 40) == 0) {
+            if (direction == Game.DOWN) {
+                y -= MOVE_Y;
+            } else if (direction == Game.UP) {
+                y += MOVE_Y;
+            } else if (direction == Game.LEFT) {
+                x += MOVE_X;
+            } else if (direction == Game.RIGHT) {
+                x -= MOVE_X;
+            }
+        }
     }
 
     @Override
