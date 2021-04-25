@@ -3,8 +3,8 @@ import java.awt.*;
 
 public class Apple {
     private Game game;
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     private Image wall;
 

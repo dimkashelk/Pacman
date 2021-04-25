@@ -135,7 +135,7 @@ public class Game extends JPanel implements Runnable {
         for (Wall wall : walls) {
             wall.paint(g);
         }
-        for (Apple apple: apples) {
+        for (Apple apple : apples) {
             apple.paint(g);
         }
 
@@ -170,5 +170,14 @@ public class Game extends JPanel implements Runnable {
 
     public Dimension getSize() {
         return new Dimension(roads.size(), roads.get(0).size());
+    }
+
+    public void killApple(int x, int y) {
+        for (int i = 0; i < apples.size(); i++) {
+            if (x == apples.get(i).x && y == apples.get(i).y) {
+                apples.remove(i);
+                break;
+            }
+        }
     }
 }

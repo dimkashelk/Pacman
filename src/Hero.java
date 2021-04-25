@@ -6,7 +6,7 @@ public interface Hero {
 
     public void move();
 
-    public void kill();
+    public void kill(int x, int y);
 
     public void paint(Graphics g);
 }

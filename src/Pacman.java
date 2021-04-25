@@ -36,6 +36,7 @@ public class Pacman implements Hero {
         MOVE_Y = pacman_right.getIconHeight();
         WIDTH = pacman_down.getIconWidth();
         HEIGHT = pacman_down.getIconHeight();
+        kill(x, y);
     }
 
     @Override
@@ -69,12 +70,14 @@ public class Pacman implements Hero {
             } else if (direction == Game.RIGHT) {
                 x -= MOVE_X;
             }
+            return;
         }
+        kill(x, y);
     }
 
     @Override
-    public void kill() {
-
+    public void kill(int x, int y) {
+        game.killApple(x, y);
     }
 
     @Override
