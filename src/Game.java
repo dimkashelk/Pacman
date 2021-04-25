@@ -20,6 +20,7 @@ public class Game extends JPanel implements Runnable {
 
     private Pacman pacman;
     private Vector<Wall> walls;
+    private Vector<Apple> apples;
     private Vector<Vector<Integer>> roads;
 
     public Game(Window wnd) {
@@ -28,6 +29,7 @@ public class Game extends JPanel implements Runnable {
         this.wnd = wnd;
 
         walls = new Vector<>();
+        apples = new Vector<>();
 
         Vector<Vector<Integer>> roads = new Vector<>();
         for (int i = 0; i < (int) wnd.getHeight() / 40; i++) {
@@ -84,10 +86,13 @@ public class Game extends JPanel implements Runnable {
             roads.get(i).set(roads.get(0).size() - 1, 0);
         }
         int wall_type = (new Random()).nextInt() % 4;
+        int apple_type = (new Random()).nextInt() % 4;
         for (int i = 0; i < roads.size(); i++) {
             for (int j = 0; j < roads.get(0).size(); j++) {
                 if (roads.get(i).get(j) == 0) {
                     walls.add(new Wall(this, 40 * j, 40 * i, wall_type));
+                } else {
+                    apples.add(new Apple(this, 40 * j, 40 * i, apple_type));
                 }
             }
         }
@@ -127,11 +132,14 @@ public class Game extends JPanel implements Runnable {
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.BLACK);
 
-        pacman.paint(g);
-
         for (Wall wall : walls) {
             wall.paint(g);
         }
+        for (Apple apple: apples) {
+            apple.paint(g);
+        }
+
+        pacman.paint(g);
     }
 
     @Override
