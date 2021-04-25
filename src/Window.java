@@ -7,8 +7,8 @@ public class Window extends JFrame {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screen_size = toolkit.getScreenSize();
         Dimension window_size = new Dimension(
-                screen_size.width / 2,
-                screen_size.height / 2
+                ((screen_size.width / 2) / 40) * 40 - 24,
+                ((screen_size.height / 2) / 40) * 40 - 2
         );
         Point window_location = new Point(
                 (screen_size.width - window_size.width) / 2,
