@@ -19,6 +19,7 @@ public class Game extends JPanel implements Runnable {
     private Window wnd;
 
     private Pacman pacman;
+    private Ghost ghost;
     private Vector<Wall> walls;
     private Vector<Apple> apples;
     private Vector<Vector<Integer>> roads;
@@ -49,6 +50,20 @@ public class Game extends JPanel implements Runnable {
             for (int j = 0; j < roads.get(0).size(); j++) {
                 if (roads.get(i).get(j) == 1) {
                     pacman = new Pacman(40 * j, 40 * i, this);
+                    fl = true;
+                    break;
+                }
+            }
+            if (fl) {
+                break;
+            }
+        }
+
+        for (int i = roads.size() - 1; i >= 0; i--) {
+            boolean fl = false;
+            for (int j = roads.get(0).size() - 1; j >= 0; j--) {
+                if (roads.get(i).get(j) == 1) {
+                    ghost = new Ghost(this, 40 * j, 40 * i);
                     fl = true;
                     break;
                 }
@@ -140,6 +155,7 @@ public class Game extends JPanel implements Runnable {
         }
 
         pacman.paint(g);
+        ghost.paint(g);
     }
 
     @Override
