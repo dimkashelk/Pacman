@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class Ghost implements Hero {
@@ -52,7 +51,15 @@ public class Ghost implements Hero {
 
     @Override
     public void move() {
-
+        if (mas.get(y / 40).get(x / 40 - 1) == mas.get(y / 40).get(x / 40) - 1) {
+            x -= MOVE_X;
+        } else if (mas.get(y / 40).get(x / 40 + 1) == mas.get(y / 40).get(x / 40) - 1) {
+            x += MOVE_X;
+        } else if (mas.get(y / 40 - 1).get(x / 40) == mas.get(y / 40).get(x / 40) - 1) {
+            y -= MOVE_Y;
+        } else if (mas.get(y / 40 + 1).get(x / 40) == mas.get(y / 40).get(x / 40) - 1) {
+            y += MOVE_Y;
+        }
     }
 
     @Override
@@ -74,17 +81,20 @@ public class Ghost implements Hero {
     }
 
     private void findPath() {
-        this.mas = game.getRoads();
-        int wall = mas.size() * mas.get(0).size() + 1;
-        for (int i = 0; i < mas.size(); i++) {
-            for (int j = 0; j < mas.get(0).size(); j++) {
-                if (mas.get(i).get(j) == 0) {
-                    mas.get(i).set(j, wall);
+        mas = new Vector<>();
+        Vector<Vector<Integer>> dop = game.getRoads();
+        for (int i = 0; i < dop.size(); i++) {
+            Vector<Integer> dop2 = new Vector<>();
+            for (int j = 0; j < dop.get(0).size(); j++) {
+                if (dop.get(i).get(j) == 0) {
+                    dop2.add(-1);
                 } else {
-                    mas.get(i).set(j, 0);
+                    dop2.add(0);
                 }
             }
+            mas.add(dop2);
         }
+        findPath(game.getPacmanCoords().y / 40, game.getPacmanCoords().x / 40, 1);
         for (int i = 0; i < mas.size(); i++) {
             for (int j = 0; j < mas.get(0).size(); j++) {
                 System.out.print(mas.get(i).get(j) + " ");
@@ -93,30 +103,23 @@ public class Ghost implements Hero {
         }
     }
 
-    private void findPath(int x, int y) {
-        ArrayList<Point> queue = new ArrayList<Point>();
-        queue.add(new Point(x, y));
-//        mas[x][y] = 1;
-//        while (queue.size() > 0) {
-//            Point cur = queue.remove(queue.size() - 1);
-//            x = cur.x;
-//            y = cur.y;
-//            if (x < width - 1 && mas[x + 1][y] == 0) {
-//                queue.add(new Point(x + 1, y));
-//                mas[x + 1][y] = 1;
-//            }
-//            if (x > 0 && mas[x - 1][y] == 0) {
-//                queue.add(new Point(x - 1, y));
-//                mas[x - 1][y] = 1;
-//            }
-//            if (y < height - 1 && mas[x][y + 1] == 0) {
-//                queue.add(new Point(x, y + 1));
-//                mas[x][y + 1] = 1;
-//            }
-//            if (y > 0 && mas[x][y - 1] == 0) {
-//                queue.add(new Point(x, y - 1));
-//                mas[x][y - 1] = 1;
-//            }
-//        }
+    private void findPath(int y, int x, int d) {
+        mas.get(y).set(x, d);
+        for (int i = y - 1; i <= y + 1; i++) {
+            for (int j = x - 1; j < x + 1; j++) {
+                if (x < mas.get(0).size() - 1 && mas.get(y).get(x + 1) == 0) {
+                    findPath(y, x + 1, d + 1);
+                }
+                if (y > 0 && mas.get(y - 1).get(x) == 0) {
+                    findPath(y - 1, x, d + 1);
+                }
+                if (y < mas.size() && mas.get(y + 1).get(x) == 0) {
+                    findPath(y + 1, x, d + 1);
+                }
+                if (x > 0 && mas.get(y).get(x - 1) == 0) {
+                    findPath(y, x - 1, d + 1);
+                }
+            }
+        }
     }
 }

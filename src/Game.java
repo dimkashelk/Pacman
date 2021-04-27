@@ -111,12 +111,6 @@ public class Game extends JPanel implements Runnable {
                 }
             }
         }
-        for (int i = 0; i < roads.size(); i++) {
-            for (int j = 0; j < roads.get(0).size(); j++) {
-                System.out.print(roads.get(i).get(j) + " ");
-            }
-            System.out.println();
-        }
     }
 
     private void initAreaColumns(Vector<Vector<Integer>> roads, int start, int end, Vector<Integer> col) {
@@ -209,5 +203,9 @@ public class Game extends JPanel implements Runnable {
 
     public Vector<Vector<Integer>> getRoads() {
         return roads;
+    }
+
+    public void moveGhosts() {
+        ghost.move();
     }
 }

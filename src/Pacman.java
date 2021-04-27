@@ -60,8 +60,7 @@ public class Pacman implements Hero {
                 x > 40 * (game.getSize().height - 1) ||
                 y < 0 ||
                 y > 40 * (game.getSize().width - 1) ||
-                game.getCell(y / 40, x / 40) == 1) {
-            System.out.println("YES");
+                game.getCell(y / 40, x / 40) == 0) {
             if (direction == Game.DOWN) {
                 y -= MOVE_Y;
             } else if (direction == Game.UP) {
@@ -73,6 +72,7 @@ public class Pacman implements Hero {
             }
             return;
         }
+        game.moveGhosts();
         kill(x, y);
     }
 
