@@ -95,12 +95,6 @@ public class Ghost implements Hero {
             mas.add(dop2);
         }
         findPath(game.getPacmanCoords().y / 40, game.getPacmanCoords().x / 40, 1);
-        for (int i = 0; i < mas.size(); i++) {
-            for (int j = 0; j < mas.get(0).size(); j++) {
-                System.out.print(mas.get(i).get(j) + " ");
-            }
-            System.out.println();
-        }
     }
 
     private void findPath(int y, int x, int d) {
