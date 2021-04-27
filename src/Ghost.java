@@ -23,7 +23,7 @@ public class Ghost implements Hero {
 
     private Vector<Vector<Integer>> mas;
 
-    public Ghost(Game game, int x, int y) {
+    public Ghost(Game game, int x, int y, int ghost_type) {
         this.game = game;
         this.x = x;
         this.y = y;
@@ -32,6 +32,22 @@ public class Ghost implements Hero {
         ImageIcon ghost_left = new ImageIcon(this.getClass().getResource("Images/ghost-green-left.png"));
         ImageIcon ghost_up = new ImageIcon(this.getClass().getResource("Images/ghost-green-up.png"));
         ImageIcon ghost_down = new ImageIcon(this.getClass().getResource("Images/ghost-green-down.png"));
+        if (ghost_type == 1) {
+            ghost_right = new ImageIcon(this.getClass().getResource("Images/ghost-blue-right.png"));
+            ghost_left = new ImageIcon(this.getClass().getResource("Images/ghost-blue-left.png"));
+            ghost_up = new ImageIcon(this.getClass().getResource("Images/ghost-blue-up.png"));
+            ghost_down = new ImageIcon(this.getClass().getResource("Images/ghost-blue-down.png"));
+        } else if (ghost_type == 2) {
+            ghost_right = new ImageIcon(this.getClass().getResource("Images/ghost-red-right.png"));
+            ghost_left = new ImageIcon(this.getClass().getResource("Images/ghost-red-left.png"));
+            ghost_up = new ImageIcon(this.getClass().getResource("Images/ghost-red-up.png"));
+            ghost_down = new ImageIcon(this.getClass().getResource("Images/ghost-red-down.png"));
+        } else if (ghost_type == 3) {
+            ghost_right = new ImageIcon(this.getClass().getResource("Images/ghost-orange-right.png"));
+            ghost_left = new ImageIcon(this.getClass().getResource("Images/ghost-orange-left.png"));
+            ghost_up = new ImageIcon(this.getClass().getResource("Images/ghost-orange-up.png"));
+            ghost_down = new ImageIcon(this.getClass().getResource("Images/ghost-orange-down.png"));
+        }
         this.ghost_right = ghost_right.getImage();
         this.ghost_left = ghost_left.getImage();
         this.ghost_up = ghost_up.getImage();

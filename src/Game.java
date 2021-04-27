@@ -19,7 +19,7 @@ public class Game extends JPanel implements Runnable {
     private Window wnd;
 
     private Pacman pacman;
-    private Ghost ghost;
+    private Vector<Ghost> ghosts;
     private Vector<Wall> walls;
     private Vector<Apple> apples;
     private Vector<Vector<Integer>> roads;
@@ -58,18 +58,24 @@ public class Game extends JPanel implements Runnable {
                 break;
             }
         }
-
+        ghosts = new Vector<>();
+        int ghost_type = 0;
         for (int i = roads.size() - 1; i >= 0; i--) {
+            Ghost ghost = null;
             boolean fl = false;
             for (int j = roads.get(0).size() - 1; j >= 0; j--) {
                 if (roads.get(i).get(j) == 1) {
-                    ghost = new Ghost(this, 40 * j, 40 * i);
+                    ghost = new Ghost(this, 40 * j, 40 * i, ghost_type);
+                    ghost_type += 1;
                     fl = true;
                     break;
                 }
             }
             if (fl) {
-                break;
+                ghosts.add(ghost);
+                if (ghosts.size() == 4) {
+                    break;
+                }
             }
         }
 
@@ -155,7 +161,9 @@ public class Game extends JPanel implements Runnable {
         }
 
         pacman.paint(g);
-        ghost.paint(g);
+        for (Ghost ghost : ghosts) {
+            ghost.paint(g);
+        }
     }
 
     @Override
@@ -206,6 +214,8 @@ public class Game extends JPanel implements Runnable {
     }
 
     public void moveGhosts() {
-        ghost.move();
+        for (Ghost ghost : ghosts) {
+            ghost.move();
+        }
     }
 }
