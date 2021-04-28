@@ -15,8 +15,8 @@ public class Ghost implements Hero {
 
     private int direction;
 
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     private int MOVE_X;
     private int MOVE_Y;
@@ -67,14 +67,23 @@ public class Ghost implements Hero {
 
     @Override
     public void move() {
+        int step_x = 0, step_y = 0;
         if (mas.get(y / 40).get(x / 40 - 1) == mas.get(y / 40).get(x / 40) - 1) {
             x -= MOVE_X;
+            step_x = -MOVE_X;
         } else if (mas.get(y / 40).get(x / 40 + 1) == mas.get(y / 40).get(x / 40) - 1) {
             x += MOVE_X;
+            step_x = MOVE_X;
         } else if (mas.get(y / 40 - 1).get(x / 40) == mas.get(y / 40).get(x / 40) - 1) {
             y -= MOVE_Y;
+            step_y = -MOVE_Y;
         } else if (mas.get(y / 40 + 1).get(x / 40) == mas.get(y / 40).get(x / 40) - 1) {
             y += MOVE_Y;
+            step_y = MOVE_Y;
+        }
+        if (game.getGhost(x, y)) {
+            x -= step_x;
+            y -= step_y;
         }
     }
 

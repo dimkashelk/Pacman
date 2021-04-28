@@ -218,4 +218,16 @@ public class Game extends JPanel implements Runnable {
             ghost.move();
         }
     }
+
+    public boolean getGhost(int x, int y) {
+        int count = 0;
+        for (Ghost ghost : ghosts) {
+            if (ghost.x == x && ghost.y == y) {
+                count += 1;
+            }
+        }
+        if (count >= 2)
+            return true;
+        return false;
+    }
 }
