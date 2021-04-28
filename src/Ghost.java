@@ -71,15 +71,19 @@ public class Ghost implements Hero {
         if (mas.get(y / 40).get(x / 40 - 1) == mas.get(y / 40).get(x / 40) - 1) {
             x -= MOVE_X;
             step_x = -MOVE_X;
+            direction = Game.LEFT;
         } else if (mas.get(y / 40).get(x / 40 + 1) == mas.get(y / 40).get(x / 40) - 1) {
             x += MOVE_X;
             step_x = MOVE_X;
+            direction = Game.RIGHT;
         } else if (mas.get(y / 40 - 1).get(x / 40) == mas.get(y / 40).get(x / 40) - 1) {
             y -= MOVE_Y;
             step_y = -MOVE_Y;
+            direction = Game.UP;
         } else if (mas.get(y / 40 + 1).get(x / 40) == mas.get(y / 40).get(x / 40) - 1) {
             y += MOVE_Y;
             step_y = MOVE_Y;
+            direction = Game.DOWN;
         }
         if (game.getGhost(x, y)) {
             x -= step_x;
