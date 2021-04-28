@@ -1,5 +1,8 @@
 import javax.swing.*;
+import javax.xml.crypto.dsig.spec.XPathFilterParameterSpec;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class Pacman implements Hero {
     private Image pacman_right;
@@ -20,6 +23,9 @@ public class Pacman implements Hero {
     private int MOVE_X = 5;
     private int MOVE_Y = 5;
 
+    private Vector<Vector<Vector<Vector<Integer>>>> path;
+    private Vector<Vector<Integer>> mas;
+
     public Pacman(int x, int y, Game game) {
         this.x = x;
         this.y = y;
@@ -37,6 +43,7 @@ public class Pacman implements Hero {
         WIDTH = pacman_down.getIconWidth();
         HEIGHT = pacman_down.getIconHeight();
         kill(x, y);
+        findPath();
     }
 
     @Override
@@ -72,6 +79,7 @@ public class Pacman implements Hero {
             }
             return;
         }
+        findPath();
         game.moveGhosts();
         kill(x, y);
     }
@@ -92,5 +100,59 @@ public class Pacman implements Hero {
         } else if (direction == Game.RIGHT) {
             g.drawImage(pacman_right, x, y, null);
         }
+    }
+
+    private void findPath() {
+        mas = new Vector<>();
+        Vector<Vector<Integer>> dop = game.getRoads();
+        for (int i = 0; i < dop.size(); i++) {
+            Vector<Integer> dop2 = new Vector<>();
+            for (int j = 0; j < dop.get(0).size(); j++) {
+                if (dop.get(i).get(j) == 0) {
+                    dop2.add(-1);
+                } else {
+                    dop2.add(0);
+                }
+            }
+            mas.add(dop2);
+        }
+        findPath(y / 40, x / 40);
+        for (int i = 0; i < mas.size(); i++) {
+            for (int j = 0; j < mas.get(0).size(); j++) {
+                System.out.print(mas.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void findPath(int x, int y) {
+        ArrayList<Point> queue = new ArrayList<>();
+        queue.add(new Point(x, y));
+        mas.get(x).set(y, 1);
+        while (queue.size() > 0) {
+            Point cur = queue.remove(queue.size() - 1);
+            x = cur.x;
+            y = cur.y;
+            if (mas.get(x + 1).get(y) == 0 || mas.get(x).get(y) + 1 < mas.get(x + 1).get(y)) {
+                queue.add(new Point(x + 1, y));
+                mas.get(x + 1).set(y, mas.get(x).get(y) + 1);
+            }
+            if (mas.get(x - 1).get(y) == 0 || mas.get(x).get(y) + 1 < mas.get(x - 1).get(y)) {
+                queue.add(new Point(x - 1, y));
+                mas.get(x - 1).set(y, mas.get(x).get(y) + 1);
+            }
+            if (mas.get(x).get(y + 1) == 0 || mas.get(x).get(y) + 1 < mas.get(x).get(y + 1)) {
+                queue.add(new Point(x, y + 1));
+                mas.get(x).set(y + 1, mas.get(x).get(y) + 1);
+            }
+            if (mas.get(x).get(y - 1) == 0 || mas.get(x).get(y) + 1 < mas.get(x).get(y - 1)) {
+                queue.add(new Point(x, y - 1));
+                mas.get(x).set(y - 1, mas.get(x).get(y) + 1);
+            }
+        }
+    }
+
+    public Vector<Vector<Integer>> getMas() {
+        return mas;
     }
 }

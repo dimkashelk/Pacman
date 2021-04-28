@@ -56,8 +56,6 @@ public class Ghost implements Hero {
         MOVE_Y = ghost_right.getIconHeight();
         WIDTH = ghost_down.getIconWidth();
         HEIGHT = ghost_down.getIconHeight();
-
-        findPath();
     }
 
     @Override
@@ -67,6 +65,7 @@ public class Ghost implements Hero {
 
     @Override
     public void move() {
+        mas = game.getMas();
         int step_x = 0, step_y = 0;
         if (mas.get(y / 40).get(x / 40 - 1) == mas.get(y / 40).get(x / 40) - 1) {
             x -= MOVE_X;
@@ -106,43 +105,6 @@ public class Ghost implements Hero {
             g.drawImage(ghost_left, x, y, null);
         } else if (direction == Game.RIGHT) {
             g.drawImage(ghost_right, x, y, null);
-        }
-    }
-
-    private void findPath() {
-        mas = new Vector<>();
-        Vector<Vector<Integer>> dop = game.getRoads();
-        for (int i = 0; i < dop.size(); i++) {
-            Vector<Integer> dop2 = new Vector<>();
-            for (int j = 0; j < dop.get(0).size(); j++) {
-                if (dop.get(i).get(j) == 0) {
-                    dop2.add(-1);
-                } else {
-                    dop2.add(0);
-                }
-            }
-            mas.add(dop2);
-        }
-        findPath(game.getPacmanCoords().y / 40, game.getPacmanCoords().x / 40, 1);
-    }
-
-    private void findPath(int y, int x, int d) {
-        mas.get(y).set(x, d);
-        for (int i = y - 1; i <= y + 1; i++) {
-            for (int j = x - 1; j < x + 1; j++) {
-                if (x < mas.get(0).size() - 1 && mas.get(y).get(x + 1) == 0) {
-                    findPath(y, x + 1, d + 1);
-                }
-                if (y > 0 && mas.get(y - 1).get(x) == 0) {
-                    findPath(y - 1, x, d + 1);
-                }
-                if (y < mas.size() && mas.get(y + 1).get(x) == 0) {
-                    findPath(y + 1, x, d + 1);
-                }
-                if (x > 0 && mas.get(y).get(x - 1) == 0) {
-                    findPath(y, x - 1, d + 1);
-                }
-            }
         }
     }
 }
