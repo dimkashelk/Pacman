@@ -235,4 +235,8 @@ public class Game extends JPanel implements Runnable {
     public Vector<Vector<Integer>> getMas() {
         return pacman.getMas();
     }
+
+    public Vector<Ghost> getGhosts() {
+        return ghosts;
+    }
 }

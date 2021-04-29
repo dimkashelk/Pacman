@@ -85,6 +85,7 @@ public class Pacman implements Hero {
         }
         findPath();
         game.moveGhosts();
+        checkCollisions();
         kill(x, y);
     }
 
@@ -156,5 +157,13 @@ public class Pacman implements Hero {
 
     public void setMode(int status) {
         mode = status;
+    }
+
+    private void checkCollisions() {
+        for (Ghost ghost : game.getGhosts()) {
+            if (ghost.x == x && ghost.y == y) {
+                setMode(0);
+            }
+        }
     }
 }
