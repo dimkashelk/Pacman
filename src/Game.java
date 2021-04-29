@@ -185,6 +185,7 @@ public class Game extends JPanel implements Runnable {
 
     public void setMode(int status) {
         this.IS_GAMING = status;
+        pacman.setMode(status);
         repaint();
     }
 

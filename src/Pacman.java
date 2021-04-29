@@ -25,6 +25,8 @@ public class Pacman implements Hero {
     private Vector<Vector<Vector<Vector<Integer>>>> path;
     private Vector<Vector<Integer>> mas;
 
+    private static int mode = 0;
+
     public Pacman(int x, int y, Game game) {
         this.x = x;
         this.y = y;
@@ -53,6 +55,9 @@ public class Pacman implements Hero {
 
     @Override
     public void move() {
+        if (mode == 0) {
+            return;
+        }
         if (direction == Game.DOWN) {
             y += MOVE_Y;
         } else if (direction == Game.UP) {
@@ -147,5 +152,9 @@ public class Pacman implements Hero {
 
     public Vector<Vector<Integer>> getMas() {
         return mas;
+    }
+
+    public void setMode(int status) {
+        mode = status;
     }
 }
