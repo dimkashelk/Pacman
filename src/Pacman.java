@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.xml.crypto.dsig.spec.XPathFilterParameterSpec;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -117,12 +116,6 @@ public class Pacman implements Hero {
             mas.add(dop2);
         }
         findPath(y / 40, x / 40);
-        for (int i = 0; i < mas.size(); i++) {
-            for (int j = 0; j < mas.get(0).size(); j++) {
-                System.out.print(mas.get(i).get(j) + " ");
-            }
-            System.out.println();
-        }
     }
 
     public void findPath(int x, int y) {
