@@ -4,25 +4,24 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 public class Pacman implements Hero {
-    private Image pacman_right;
-    private Image pacman_left;
-    private Image pacman_up;
-    private Image pacman_down;
+    private final Image pacman_right;
+    private final Image pacman_left;
+    private final Image pacman_up;
+    private final Image pacman_down;
 
     public static int WIDTH;
     public static int HEIGHT;
 
-    private Game game;
+    private final Game game;
 
     private int direction;
 
     public int x;
     public int y;
 
-    private int MOVE_X = 5;
-    private int MOVE_Y = 5;
+    private final int MOVE_X;
+    private final int MOVE_Y;
 
-    private Vector<Vector<Vector<Vector<Integer>>>> path;
     private Vector<Vector<Integer>> mas;
 
     private static int mode = 0;
@@ -125,27 +124,27 @@ public class Pacman implements Hero {
     }
 
     public void findPath(int x, int y) {
-        ArrayList<Point> queue = new ArrayList<>();
-        queue.add(new Point(x, y));
+        ArrayList<MyPoint> queue = new ArrayList<>();
+        queue.add(new MyPoint(x, y));
         mas.get(x).set(y, 1);
         while (queue.size() > 0) {
-            Point cur = queue.remove(queue.size() - 1);
+            MyPoint cur = queue.remove(queue.size() - 1);
             x = cur.x;
             y = cur.y;
             if (mas.get(x + 1).get(y) == 0 || mas.get(x).get(y) + 1 < mas.get(x + 1).get(y)) {
-                queue.add(new Point(x + 1, y));
+                queue.add(new MyPoint(x + 1, y));
                 mas.get(x + 1).set(y, mas.get(x).get(y) + 1);
             }
             if (mas.get(x - 1).get(y) == 0 || mas.get(x).get(y) + 1 < mas.get(x - 1).get(y)) {
-                queue.add(new Point(x - 1, y));
+                queue.add(new MyPoint(x - 1, y));
                 mas.get(x - 1).set(y, mas.get(x).get(y) + 1);
             }
             if (mas.get(x).get(y + 1) == 0 || mas.get(x).get(y) + 1 < mas.get(x).get(y + 1)) {
-                queue.add(new Point(x, y + 1));
+                queue.add(new MyPoint(x, y + 1));
                 mas.get(x).set(y + 1, mas.get(x).get(y) + 1);
             }
             if (mas.get(x).get(y - 1) == 0 || mas.get(x).get(y) + 1 < mas.get(x).get(y - 1)) {
-                queue.add(new Point(x, y - 1));
+                queue.add(new MyPoint(x, y - 1));
                 mas.get(x).set(y - 1, mas.get(x).get(y) + 1);
             }
         }

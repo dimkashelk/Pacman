@@ -3,25 +3,23 @@ import java.awt.*;
 import java.util.Vector;
 
 public class Ghost implements Hero {
-    private Image ghost_right;
-    private Image ghost_left;
-    private Image ghost_up;
-    private Image ghost_down;
+    private final Image ghost_right;
+    private final Image ghost_left;
+    private final Image ghost_up;
+    private final Image ghost_down;
 
     public static int WIDTH;
     public static int HEIGHT;
 
-    private Game game;
+    private final Game game;
 
     private int direction;
 
     public int x;
     public int y;
 
-    private int MOVE_X;
-    private int MOVE_Y;
-
-    private Vector<Vector<Integer>> mas;
+    private final int MOVE_X;
+    private final int MOVE_Y;
 
     public Ghost(Game game, int x, int y, int ghost_type) {
         this.game = game;
@@ -65,7 +63,7 @@ public class Ghost implements Hero {
 
     @Override
     public void move() {
-        mas = game.getMas();
+        Vector<Vector<Integer>> mas = game.getMas();
         int step_x = 0, step_y = 0;
         if (mas.get(y / 40).get(x / 40 - 1) == mas.get(y / 40).get(x / 40) - 1) {
             x -= MOVE_X;

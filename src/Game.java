@@ -206,8 +206,8 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
-    public Point getPacmanCoords() {
-        return new Point(pacman.x, pacman.y);
+    public MyPoint getPacmanCoords() {
+        return new MyPoint(pacman.x, pacman.y);
     }
 
     public Vector<Vector<Integer>> getRoads() {
