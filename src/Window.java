@@ -3,6 +3,8 @@ import java.awt.*;
 
 public class Window extends JFrame {
 
+    private Image background;
+
     public Window() throws HeadlessException {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screen_size = toolkit.getScreenSize();
@@ -19,21 +21,39 @@ public class Window extends JFrame {
         setSize(window_size);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setLayout(new BorderLayout());
+        background = new ImageIcon(this.getClass().getResource("Images/menu.png")).getImage();
 
-        Game pacman = new Game(this);
-        add(pacman, BorderLayout.CENTER);
+        JPanel menu = new JPanel();
+        menu.setLayout(new BorderLayout());
 
-        KeyboardListener keyboardListener = new KeyboardListener(pacman);
-        addKeyListener(keyboardListener);
+        JButton new_game = new JButton();
+        Image icon_image = new ImageIcon(this.getClass().getResource("Images/new-game-button.png")).getImage().getScaledInstance((int) (getWidth() * 0.302), (int) (getHeight() * 0.083), Image.SCALE_DEFAULT);
+        new_game.setIcon(new ImageIcon(icon_image));
+        new_game.setLocation((int) (getWidth() * 0.365), (int) (getHeight() * 0.602));
+        new_game.setBorder(BorderFactory.createEmptyBorder());
+        menu.add(new_game);
 
-        Thread pacmanThread = new Thread(pacman);
-        pacmanThread.start();
+//        Game pacman = new Game(this);
+//        pacman.setSize(getWidth(), getHeight());
+//        pacman.setLocation(0, 0);
+//        add(pacman);
+//
+//        KeyboardListener keyboardListener = new KeyboardListener(pacman);
+//        addKeyListener(keyboardListener);
+//
+//        Thread pacmanThread = new Thread(pacman);
+//        pacmanThread.start();
 
+        add(menu, BorderLayout.CENTER);
         setVisible(true);
     }
 
     public static void main(String[] args) {
         Window wnd = new Window();
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
     }
 }
