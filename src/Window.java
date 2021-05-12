@@ -23,15 +23,9 @@ public class Window extends JFrame {
 
         background = new ImageIcon(this.getClass().getResource("Images/menu.png")).getImage();
 
-        JPanel menu = new JPanel();
-        menu.setLayout(new BorderLayout());
-
-        JButton new_game = new JButton();
-        Image icon_image = new ImageIcon(this.getClass().getResource("Images/new-game-button.png")).getImage().getScaledInstance((int) (getWidth() * 0.302), (int) (getHeight() * 0.083), Image.SCALE_DEFAULT);
-        new_game.setIcon(new ImageIcon(icon_image));
-        new_game.setLocation((int) (getWidth() * 0.365), (int) (getHeight() * 0.602));
-        new_game.setBorder(BorderFactory.createEmptyBorder());
-        menu.add(new_game);
+        Menu menu = new Menu(this);
+        menu.setLocation(0, 0);
+        add(menu);
 
 //        Game pacman = new Game(this);
 //        pacman.setSize(getWidth(), getHeight());
@@ -44,7 +38,6 @@ public class Window extends JFrame {
 //        Thread pacmanThread = new Thread(pacman);
 //        pacmanThread.start();
 
-        add(menu, BorderLayout.CENTER);
         setVisible(true);
     }
 
