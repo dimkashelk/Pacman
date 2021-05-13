@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 import java.util.Vector;
 
@@ -23,6 +25,8 @@ public class Game extends JPanel implements Runnable {
     private Vector<Wall> walls;
     private Vector<Apple> apples;
     private Vector<Vector<Integer>> roads;
+
+    private Image background = null;
 
     public Game(Window wnd) {
         super(true);
@@ -78,8 +82,9 @@ public class Game extends JPanel implements Runnable {
                 }
             }
         }
-
-        KeyboardListener keyboardListener = new KeyboardListener(this);
+        setVisible(true);
+        requestFocus();
+        KeyboardListener keyboardListener = new KeyboardListener(wnd);
         addKeyListener(keyboardListener);
     }
 

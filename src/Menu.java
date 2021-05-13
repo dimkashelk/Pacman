@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Menu extends JPanel implements Runnable {
 
@@ -22,6 +24,12 @@ public class Menu extends JPanel implements Runnable {
         new_game.setBounds((int) (wnd.getWidth() * 0.365), (int) (wnd.getHeight() * 0.602), icon_image.getWidth(null), icon_image.getHeight(null));
         new_game.setLocation((int) (wnd.getWidth() * 0.365), (int) (wnd.getHeight() * 0.602));
         new_game.setBorder(BorderFactory.createEmptyBorder());
+        new_game.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                wnd.newGame();
+            }
+        });
         add(new_game);
     }
 

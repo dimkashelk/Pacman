@@ -5,6 +5,11 @@ public class Window extends JFrame {
 
     private Image background;
 
+    private Menu menu = null;
+    private Thread pacmanThread = null;
+    private Game pacman = null;
+    private KeyboardListener keyBoardListener = null;
+
     public Window() throws HeadlessException {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screen_size = toolkit.getScreenSize();
@@ -23,20 +28,19 @@ public class Window extends JFrame {
 
         background = new ImageIcon(this.getClass().getResource("Images/menu.png")).getImage();
 
-        Menu menu = new Menu(this);
+        menu = new Menu(this);
         menu.setLocation(0, 0);
         add(menu);
 
-//        Game pacman = new Game(this);
-//        pacman.setSize(getWidth(), getHeight());
-//        pacman.setLocation(0, 0);
-//        add(pacman);
-//
-//        KeyboardListener keyboardListener = new KeyboardListener(pacman);
-//        addKeyListener(keyboardListener);
-//
-//        Thread pacmanThread = new Thread(pacman);
-//        pacmanThread.start();
+        pacman = new Game(this);
+        pacman.setSize(getWidth(), getHeight());
+        pacman.setLocation(0, 0);
+
+        keyBoardListener = new KeyboardListener(this);
+        addKeyListener(keyBoardListener);
+
+        pacmanThread = new Thread(pacman);
+        pacmanThread.start();
 
         setVisible(true);
     }
@@ -48,5 +52,21 @@ public class Window extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+    }
+
+    public void newGame() {
+        remove(menu);
+        add(pacman);
+        pacman.requestFocus();
+        pacman.requestFocusInWindow();
+        revalidate();
+    }
+
+    public void move(int direction) {
+        pacman.move(direction);
+    }
+
+    public void setMode(int status) {
+        pacman.setMode(status);
     }
 }
