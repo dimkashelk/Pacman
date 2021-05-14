@@ -6,12 +6,16 @@ public class Wall {
     private int x;
     private int y;
 
+    public int wall_type;
+
     private Image wall;
 
     public Wall(Game game, int x, int y, int wall_type) {
         this.game = game;
         this.x = x;
         this.y = y;
+        this.wall_type = wall_type;
+
         ImageIcon wall = new ImageIcon(this.getClass().getResource("Images/wall-red.png"));
         if (wall_type == 1) {
             wall = new ImageIcon(this.getClass().getResource("Images/wall-blue.png"));

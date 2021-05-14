@@ -245,29 +245,28 @@ public class Game extends JPanel implements Runnable {
     }
 
     private void saveMap() {
-        try(FileWriter writer = new FileWriter("./Saves/map.txt", false)) {
+        try (FileWriter writer = new FileWriter("./Saves/map.txt", false)) {
             for (Vector<Integer> road : roads) {
                 for (int j = 0; j < roads.get(0).size(); j++) {
                     writer.write(road.get(j) + " ");
                 }
                 writer.write("\n");
             }
+            writer.write(walls.get(0).wall_type);
             writer.flush();
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
     private void saveHeroes() {
-        try(FileWriter writer = new FileWriter("./Saves/heroes.txt", false)) {
+        try (FileWriter writer = new FileWriter("./Saves/heroes.txt", false)) {
             writer.write(pacman.x + " " + pacman.y + " " + pacman.direction + "\n");
-            for (Ghost ghost: ghosts) {
+            for (Ghost ghost : ghosts) {
                 writer.write(ghost.x + " " + ghost.y + " " + ghost.direction + " " + ghost.ghost_type + "\n");
             }
             writer.flush();
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }

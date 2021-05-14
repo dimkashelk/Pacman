@@ -14,7 +14,7 @@ public class Pacman implements Hero {
 
     private final Game game;
 
-    private int direction;
+    public int direction;
 
     public int x;
     public int y;
