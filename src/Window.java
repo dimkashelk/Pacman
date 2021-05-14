@@ -69,4 +69,8 @@ public class Window extends JFrame {
     public void setMode(int status) {
         pacman.setMode(status);
     }
+
+    public void continueGame() {
+        newGame();
+    }
 }

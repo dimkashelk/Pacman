@@ -31,6 +31,20 @@ public class Menu extends JPanel implements Runnable {
             }
         });
         add(new_game);
+
+        JButton continue_game = new JButton();
+        icon_image = new ImageIcon(this.getClass().getResource("Images/continue-button.png")).getImage().getScaledInstance((int) (wnd.getWidth() * 0.302), (int) (wnd.getHeight() * 0.083), Image.SCALE_DEFAULT);
+        continue_game.setText(null);
+        continue_game.setIcon(new ImageIcon(icon_image));
+        continue_game.setBounds((int) (wnd.getWidth() * 0.365), (int) (wnd.getHeight() * 0.5), icon_image.getWidth(null), icon_image.getHeight(null));
+        continue_game.setBorder(BorderFactory.createEmptyBorder());
+        continue_game.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                wnd.continueGame();
+            }
+        });
+        add(continue_game);
     }
 
     @Override
