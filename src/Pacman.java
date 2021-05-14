@@ -30,20 +30,52 @@ public class Pacman implements Hero {
         this.x = x;
         this.y = y;
         this.game = game;
+
         ImageIcon pacman_right = new ImageIcon(this.getClass().getResource("Images/pacman_right.png"));
         ImageIcon pacman_left = new ImageIcon(this.getClass().getResource("Images/pacman_left.png"));
         ImageIcon pacman_up = new ImageIcon(this.getClass().getResource("Images/pacman_up.png"));
         ImageIcon pacman_down = new ImageIcon(this.getClass().getResource("Images/pacman_down.png"));
+
         this.pacman_right = pacman_right.getImage();
         this.pacman_left = pacman_left.getImage();
         this.pacman_up = pacman_up.getImage();
         this.pacman_down = pacman_down.getImage();
+
         MOVE_X = pacman_right.getIconWidth();
         MOVE_Y = pacman_right.getIconHeight();
+
         WIDTH = pacman_down.getIconWidth();
         HEIGHT = pacman_down.getIconHeight();
+
         kill(x, y);
         findPath();
+    }
+
+    public Pacman(int x, int y, Game game, int direction) {
+        this.x = x;
+        this.y = y;
+        this.game = game;
+
+        ImageIcon pacman_right = new ImageIcon(this.getClass().getResource("Images/pacman_right.png"));
+        ImageIcon pacman_left = new ImageIcon(this.getClass().getResource("Images/pacman_left.png"));
+        ImageIcon pacman_up = new ImageIcon(this.getClass().getResource("Images/pacman_up.png"));
+        ImageIcon pacman_down = new ImageIcon(this.getClass().getResource("Images/pacman_down.png"));
+
+        this.pacman_right = pacman_right.getImage();
+        this.pacman_left = pacman_left.getImage();
+        this.pacman_up = pacman_up.getImage();
+        this.pacman_down = pacman_down.getImage();
+
+        MOVE_X = pacman_right.getIconWidth();
+        MOVE_Y = pacman_right.getIconHeight();
+
+        WIDTH = pacman_down.getIconWidth();
+        HEIGHT = pacman_down.getIconHeight();
+
+        kill(x, y);
+        findPath();
+
+        this.direction = direction;
     }
 
     @Override

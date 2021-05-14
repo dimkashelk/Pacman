@@ -287,6 +287,7 @@ public class Game extends JPanel implements Runnable {
 
     public void continueGame() {
         loadMap();
+        loadHeroes();
     }
 
     private void loadMap() {
@@ -301,6 +302,25 @@ public class Game extends JPanel implements Runnable {
                     d.add(dop.nextInt());
                 }
                 roads.add(d);
+            }
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private void loadHeroes() {
+        try(FileReader reader = new FileReader("./Saves/heroes.txt")) {
+            Scanner sc = new Scanner(reader);
+            Scanner dop = new Scanner(sc.nextLine());
+
+            pacman = new Pacman(dop.nextInt(), dop.nextInt(), this, dop.nextInt());
+
+            ghosts = new Vector<>();
+            while (sc.hasNext()) {
+                dop = new Scanner(sc.nextLine());
+                Ghost ghost = new Ghost(this, dop.nextInt(), dop.nextInt(), dop.nextInt());
+                ghosts.add(ghost);
             }
         }
         catch(IOException ex){
