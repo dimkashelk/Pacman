@@ -242,6 +242,7 @@ public class Game extends JPanel implements Runnable {
     public void saveGame() {
         saveMap();
         saveHeroes();
+        saveApples();
     }
 
     private void saveMap() {
@@ -264,6 +265,17 @@ public class Game extends JPanel implements Runnable {
             writer.write(pacman.x + " " + pacman.y + " " + pacman.direction + "\n");
             for (Ghost ghost : ghosts) {
                 writer.write(ghost.x + " " + ghost.y + " " + ghost.direction + " " + ghost.ghost_type + "\n");
+            }
+            writer.flush();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private void saveApples() {
+        try (FileWriter writer = new FileWriter("./Saves/apples.txt", false)) {
+            for (Apple apple: apples) {
+                writer.write(apple.x + " " + apple.y + " " + apple.apple_type + "\n");
             }
             writer.flush();
         } catch (IOException ex) {

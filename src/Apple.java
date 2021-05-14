@@ -8,10 +8,14 @@ public class Apple {
 
     private Image wall;
 
+    public int apple_type;
+
     public Apple(Game game, int x, int y, int apple_type) {
         this.game = game;
         this.x = x;
         this.y = y;
+        this.apple_type = apple_type;
+
         ImageIcon wall = new ImageIcon(this.getClass().getResource("Images/apple-red.png"));
         if (apple_type == 1) {
             wall = new ImageIcon(this.getClass().getResource("Images/apple-blue.png"));
