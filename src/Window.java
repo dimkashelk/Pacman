@@ -1,5 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Window extends JFrame {
 
@@ -72,5 +77,17 @@ public class Window extends JFrame {
 
     public void continueGame() {
         newGame();
+    }
+
+    public void saveGame() throws IOException {
+        checkDirectory();
+        pacman.saveGame();
+    }
+
+    private void checkDirectory() {
+        File pathSaves = new File("./Saves");
+        if (!pathSaves.exists()) {
+            pathSaves.mkdir();
+        }
     }
 }

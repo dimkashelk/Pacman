@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 
@@ -243,5 +246,24 @@ public class Game extends JPanel implements Runnable {
 
     public Vector<Ghost> getGhosts() {
         return ghosts;
+    }
+
+    public void saveGame() {
+        saveMap();
+    }
+
+    private void saveMap() {
+        try(FileWriter writer = new FileWriter("./Saves/map.txt", false)) {
+            for (int i = 0; i < roads.size(); i++) {
+                for (int j = 0; j < roads.get(0).size(); j++) {
+                    writer.write(roads.get(i).get(j) + " ");
+                }
+                writer.write("\n");
+            }
+            writer.flush();
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 }

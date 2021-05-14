@@ -1,5 +1,6 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 public class KeyboardListener implements KeyListener {
 
@@ -26,6 +27,14 @@ public class KeyboardListener implements KeyListener {
             wnd.move(Game.DOWN);
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             wnd.setMode(Game.START_GAME);
+        } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.out.println("YES");
+            try {
+                wnd.saveGame();
+                System.out.println("YEEEEE");
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
 
