@@ -76,10 +76,11 @@ public class Window extends JFrame {
     }
 
     public void continueGame() {
+        pacman.continueGame();
         newGame();
     }
 
-    public void saveGame() throws IOException {
+    public void saveGame() {
         checkDirectory();
         pacman.saveGame();
     }

@@ -28,13 +28,7 @@ public class KeyboardListener implements KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             wnd.setMode(Game.START_GAME);
         } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            System.out.println("YES");
-            try {
-                wnd.saveGame();
-                System.out.println("YEEEEE");
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            wnd.saveGame();
         }
     }
 

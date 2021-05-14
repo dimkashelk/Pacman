@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Vector;
 
 public class Game extends JPanel implements Runnable {
@@ -279,6 +281,29 @@ public class Game extends JPanel implements Runnable {
             }
             writer.flush();
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void continueGame() {
+        loadMap();
+    }
+
+    private void loadMap() {
+        try(FileReader reader = new FileReader("./Saves/map.txt")) {
+            roads = new Vector<>();
+
+            Scanner sc = new Scanner(reader);
+            while (sc.hasNext()) {
+                Scanner dop = new Scanner(sc.nextLine());
+                Vector<Integer> d = new Vector<>();
+                while (dop.hasNextInt()) {
+                    d.add(dop.nextInt());
+                }
+                roads.add(d);
+            }
+        }
+        catch(IOException ex){
             System.out.println(ex.getMessage());
         }
     }
