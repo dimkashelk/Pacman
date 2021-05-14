@@ -13,7 +13,8 @@ public class Ghost implements Hero {
 
     private final Game game;
 
-    private int direction;
+    public int direction;
+    public int ghost_type;
 
     public int x;
     public int y;
@@ -25,6 +26,7 @@ public class Ghost implements Hero {
         this.game = game;
         this.x = x;
         this.y = y;
+        this.ghost_type = ghost_type;
 
         ImageIcon ghost_right = new ImageIcon(this.getClass().getResource("Images/ghost-green-right.png"));
         ImageIcon ghost_left = new ImageIcon(this.getClass().getResource("Images/ghost-green-left.png"));

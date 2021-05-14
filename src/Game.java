@@ -1,8 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
@@ -214,10 +211,6 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
-    public MyPoint getPacmanCoords() {
-        return new MyPoint(pacman.x, pacman.y);
-    }
-
     public Vector<Vector<Integer>> getRoads() {
         return roads;
     }
@@ -235,9 +228,7 @@ public class Game extends JPanel implements Runnable {
                 count += 1;
             }
         }
-        if (count >= 2)
-            return true;
-        return false;
+        return count >= 2;
     }
 
     public Vector<Vector<Integer>> getMas() {
@@ -250,15 +241,29 @@ public class Game extends JPanel implements Runnable {
 
     public void saveGame() {
         saveMap();
+        saveHeroes();
     }
 
     private void saveMap() {
         try(FileWriter writer = new FileWriter("./Saves/map.txt", false)) {
-            for (int i = 0; i < roads.size(); i++) {
+            for (Vector<Integer> road : roads) {
                 for (int j = 0; j < roads.get(0).size(); j++) {
-                    writer.write(roads.get(i).get(j) + " ");
+                    writer.write(road.get(j) + " ");
                 }
                 writer.write("\n");
+            }
+            writer.flush();
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private void saveHeroes() {
+        try(FileWriter writer = new FileWriter("./Saves/heroes.txt", false)) {
+            writer.write(pacman.x + " " + pacman.y + " " + pacman.direction + "\n");
+            for (Ghost ghost: ghosts) {
+                writer.write(ghost.x + " " + ghost.y + " " + ghost.direction + " " + ghost.ghost_type + "\n");
             }
             writer.flush();
         }
