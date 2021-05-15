@@ -17,6 +17,7 @@ public class Game extends JPanel implements Runnable {
 
     public static final int START_GAME = 1;
     public static final int STOP_GAME = 0;
+    public static final int END_GAME = -1;
 
     private int IS_GAMING = 0;
 
@@ -31,12 +32,14 @@ public class Game extends JPanel implements Runnable {
     private int wall_type;
     private int apple_type;
 
-    private Image background = null;
+    private Image end_game = null;
 
     public Game(Window wnd) {
         super(true);
 
         this.wnd = wnd;
+
+        end_game = new ImageIcon(this.getClass().getResource("Images/endgame.jpg")).getImage();
 
         walls = new Vector<>();
         apples = new Vector<>();
@@ -162,17 +165,22 @@ public class Game extends JPanel implements Runnable {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.BLACK);
+        if (apples.size() == 0) {
 
-        for (Wall wall : walls) {
-            wall.paint(g);
-        }
-        for (Apple apple : apples) {
-            apple.paint(g);
-        }
+        } else if (IS_GAMING == Game.END_GAME) {
+            g.drawImage(end_game, 0, 0, getWidth(), getHeight(), null);
+        } else {
+            for (Wall wall : walls) {
+                wall.paint(g);
+            }
+            for (Apple apple : apples) {
+                apple.paint(g);
+            }
 
-        pacman.paint(g);
-        for (Ghost ghost : ghosts) {
-            ghost.paint(g);
+            pacman.paint(g);
+            for (Ghost ghost : ghosts) {
+                ghost.paint(g);
+            }
         }
     }
 

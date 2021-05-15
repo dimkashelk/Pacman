@@ -24,7 +24,7 @@ public class Pacman implements Hero {
 
     private Vector<Vector<Integer>> mas;
 
-    private static int mode = 0;
+    private static int mode = Game.STOP_GAME;
 
     public Pacman(int x, int y, Game game) {
         this.x = x;
@@ -86,7 +86,7 @@ public class Pacman implements Hero {
 
     @Override
     public void move() {
-        if (mode == 0) {
+        if (mode == Game.END_GAME || mode == Game.STOP_GAME) {
             return;
         }
         if (direction == Game.DOWN) {
@@ -193,7 +193,7 @@ public class Pacman implements Hero {
     private void checkCollisions() {
         for (Ghost ghost : game.getGhosts()) {
             if (ghost.x == x && ghost.y == y) {
-                setMode(0);
+                game.setMode(Game.END_GAME);
             }
         }
     }
