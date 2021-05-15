@@ -143,7 +143,7 @@ public class Pacman implements Hero {
         Vector<Vector<Integer>> dop = game.getRoads();
         for (int i = 0; i < dop.size(); i++) {
             Vector<Integer> dop2 = new Vector<>();
-            for (int j = 0; j < dop.get(0).size(); j++) {
+            for (int j = 0; j < dop.get(i).size(); j++) {
                 if (dop.get(i).get(j) == 0) {
                     dop2.add(-1);
                 } else {

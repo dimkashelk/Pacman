@@ -3,8 +3,8 @@ import java.awt.*;
 
 public class Wall {
     private Game game;
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     public int wall_type;
 

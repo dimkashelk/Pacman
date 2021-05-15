@@ -28,6 +28,9 @@ public class Game extends JPanel implements Runnable {
     private Vector<Apple> apples;
     private Vector<Vector<Integer>> roads;
 
+    private int wall_type;
+    private int apple_type;
+
     private Image background = null;
 
     public Game(Window wnd) {
@@ -113,8 +116,8 @@ public class Game extends JPanel implements Runnable {
             roads.get(i).set(0, 0);
             roads.get(i).set(roads.get(0).size() - 1, 0);
         }
-        int wall_type = (new Random()).nextInt() % 4;
-        int apple_type = (new Random()).nextInt() % 4;
+        wall_type = Math.abs((new Random()).nextInt()) % 4;
+        apple_type = Math.abs((new Random()).nextInt()) % 4;
         for (int i = 0; i < roads.size(); i++) {
             for (int j = 0; j < roads.get(0).size(); j++) {
                 if (roads.get(i).get(j) == 0) {
@@ -255,7 +258,7 @@ public class Game extends JPanel implements Runnable {
                 }
                 writer.write("\n");
             }
-            writer.write(walls.get(0).wall_type);
+            writer.write(wall_type + "\n");
             writer.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -288,6 +291,7 @@ public class Game extends JPanel implements Runnable {
     public void continueGame() {
         loadMap();
         loadHeroes();
+        repaint();
     }
 
     private void loadMap() {
