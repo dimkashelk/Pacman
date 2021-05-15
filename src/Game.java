@@ -44,7 +44,7 @@ public class Game extends JPanel implements Runnable {
         walls = new Vector<>();
         apples = new Vector<>();
 
-        Vector<Vector<Integer>> roads = new Vector<>();
+        roads = new Vector<>();
         for (int i = 0; i < (int) wnd.getHeight() / 40; i++) {
             Vector<Integer> dop = new Vector<>();
             for (int j = 0; j < (int) wnd.getWidth() / 40; j++) {
@@ -53,9 +53,7 @@ public class Game extends JPanel implements Runnable {
             roads.add(dop);
         }
 
-        initArea(roads);
-
-        this.roads = roads;
+        initArea();
 
         for (int i = 0; i < roads.size(); i++) {
             boolean fl = false;
@@ -96,28 +94,15 @@ public class Game extends JPanel implements Runnable {
         addKeyListener(keyboardListener);
     }
 
-    private void initArea(Vector<Vector<Integer>> roads) {
-        Vector<Integer> columns = new Vector<>();
-        initAreaColumns(roads, 0, roads.get(0).size(), columns);
-        for (Integer column : columns) {
-            if (roads.get(1).get(column - 1) != 1 && roads.get(1).get(column + 1) != 1) {
-                for (int i = 1; i < roads.size() - 1; i++) {
-                    roads.get(i).set(column, 1);
-                }
-            }
-        }
-        Vector<Integer> rows = new Vector<>();
-        initAreaRows(roads, 0, roads.size(), rows);
-        for (Integer row : rows) {
-            if (roads.get(row - 1).get(0) != 1 && roads.get(row + 1).get(0) != 1) {
-                for (int i = 0; i < roads.get(0).size(); i++) {
-                    roads.get(row).set(i, 1);
-                }
-            }
-        }
+    private void initArea() {
+        initAreaColumns(0, roads.get(0).size(), 0, roads.size());
         for (int i = 0; i < roads.size(); i++) {
             roads.get(i).set(0, 0);
             roads.get(i).set(roads.get(0).size() - 1, 0);
+        }
+        for (int i = 0; i < roads.get(0).size(); i++) {
+            roads.get(0).set(i, 0);
+            roads.get(roads.size() - 1).set(i, 0);
         }
         wall_type = Math.abs((new Random()).nextInt()) % 4;
         apple_type = Math.abs((new Random()).nextInt()) % 4;
@@ -132,27 +117,35 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
-    private void initAreaColumns(Vector<Vector<Integer>> roads, int start, int end, Vector<Integer> col) {
-        if (start + 3 >= end) {
+    private void initAreaColumns(int left, int right, int up, int down) {
+        if (left + 4 >= right) {
             return;
         }
-        int column = getRandomNumberWithoutBorders(start, end);
-        col.add(column);
-        initAreaColumns(roads, start, column, col);
-        initAreaColumns(roads, column, end, col);
+        int column = getRandomNumber(left, right);
+        for (int i = up; i < down; i++) {
+            if (roads.get(i).get(column - 1) != 1 && roads.get(i).get(column + 1) != 1) {
+                roads.get(i).set(column, 1);
+            }
+        }
+        initAreaRows(left, column, up, down);
+        initAreaRows(column - 1, right, up, down);
     }
 
-    private void initAreaRows(Vector<Vector<Integer>> roads, int start, int end, Vector<Integer> rows) {
-        if (start + 3 >= end) {
+    private void initAreaRows(int left, int right, int up, int down) {
+        if (up + 4 >= down) {
             return;
         }
-        int row = getRandomNumberWithoutBorders(start, end);
-        rows.add(row);
-        initAreaRows(roads, start, row, rows);
-        initAreaRows(roads, row, end, rows);
+        int row = getRandomNumber(up, down);
+        for (int i = left; i < right; i++) {
+            if (roads.get(row - 1).get(i) != 1 && roads.get(row + 1).get(i) != 1) {
+                roads.get(row).set(i, 1);
+            }
+        }
+        initAreaColumns(left, right, up, row);
+        initAreaColumns(left, right, row - 1, down);
     }
 
-    private int getRandomNumberWithoutBorders(int a, int b) {
+    private int getRandomNumber(int a, int b) {
         int dop = a + (int) (Math.random() * (b - a - 2));
         if (dop == a)
             return a + 2;
@@ -288,7 +281,7 @@ public class Game extends JPanel implements Runnable {
 
     private void saveApples() {
         try (FileWriter writer = new FileWriter("./Saves/apples.txt", false)) {
-            for (Apple apple: apples) {
+            for (Apple apple : apples) {
                 writer.write(apple.x + " " + apple.y + " " + apple.apple_type + "\n");
             }
             writer.flush();
@@ -305,7 +298,7 @@ public class Game extends JPanel implements Runnable {
     }
 
     private void loadMap() {
-        try(FileReader reader = new FileReader("./Saves/map.txt")) {
+        try (FileReader reader = new FileReader("./Saves/map.txt")) {
             roads = new Vector<>();
 
             Scanner sc = new Scanner(reader);
@@ -330,14 +323,13 @@ public class Game extends JPanel implements Runnable {
                     }
                 }
             }
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
     private void loadHeroes() {
-        try(FileReader reader = new FileReader("./Saves/heroes.txt")) {
+        try (FileReader reader = new FileReader("./Saves/heroes.txt")) {
             Scanner sc = new Scanner(reader);
             Scanner dop = new Scanner(sc.nextLine());
 
@@ -349,14 +341,13 @@ public class Game extends JPanel implements Runnable {
                 Ghost ghost = new Ghost(this, dop.nextInt(), dop.nextInt(), dop.nextInt());
                 ghosts.add(ghost);
             }
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
     private void loadApples() {
-        try(FileReader reader = new FileReader("./Saves/apples.txt")) {
+        try (FileReader reader = new FileReader("./Saves/apples.txt")) {
             Scanner sc = new Scanner(reader);
 
             apples = new Vector<>();
@@ -364,8 +355,7 @@ public class Game extends JPanel implements Runnable {
                 Scanner dop = new Scanner(sc.nextLine());
                 apples.add(new Apple(this, dop.nextInt(), dop.nextInt(), dop.nextInt()));
             }
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
