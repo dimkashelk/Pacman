@@ -256,6 +256,7 @@ public class Game extends JPanel implements Runnable {
         saveMap();
         saveHeroes();
         saveApples();
+        wnd.loadMenu();
     }
 
     private void saveMap() {

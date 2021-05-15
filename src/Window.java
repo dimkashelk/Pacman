@@ -67,6 +67,16 @@ public class Window extends JFrame {
         revalidate();
     }
 
+    public void loadMenu() {
+        remove(pacman);
+        add(menu);
+        menu.repaint();
+        menu.requestFocus();
+        menu.requestFocusInWindow();
+        revalidate();
+        menu.repaint();
+    }
+
     public void move(int direction) {
         pacman.move(direction);
     }
