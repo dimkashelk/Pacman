@@ -18,6 +18,7 @@ public class Game extends JPanel implements Runnable {
     public static final int START_GAME = 1;
     public static final int STOP_GAME = 0;
     public static final int END_GAME = -1;
+    public static final int EAT_GHOSTS = 2;
 
     private int IS_GAMING = 0;
 
@@ -91,7 +92,7 @@ public class Game extends JPanel implements Runnable {
 
         for (int i = 0; i < 6; i++) {
             Apple apple = apples.get(new Random().nextInt(apples.size()));
-            apple.special = true;
+            apple.special = 1;
         }
 
         setVisible(true);
@@ -124,7 +125,7 @@ public class Game extends JPanel implements Runnable {
     }
 
     private void initAreaColumns(int left, int right, int up, int down) {
-        if (left + 4 >= right) {
+        if (left + 3 >= right) {
             return;
         }
         int column = getRandomNumber(left, right);
@@ -138,7 +139,7 @@ public class Game extends JPanel implements Runnable {
     }
 
     private void initAreaRows(int left, int right, int up, int down) {
-        if (up + 4 >= down) {
+        if (up + 3 >= down) {
             return;
         }
         int row = getRandomNumber(up, down);
@@ -288,7 +289,7 @@ public class Game extends JPanel implements Runnable {
     private void saveApples() {
         try (FileWriter writer = new FileWriter("./Saves/apples.txt", false)) {
             for (Apple apple : apples) {
-                writer.write(apple.x + " " + apple.y + " " + apple.apple_type + "\n");
+                writer.write(apple.x + " " + apple.y + " " + apple.apple_type + " " + apple.special + "\n");
             }
             writer.flush();
         } catch (IOException ex) {
@@ -359,7 +360,7 @@ public class Game extends JPanel implements Runnable {
             apples = new Vector<>();
             while (sc.hasNext()) {
                 Scanner dop = new Scanner(sc.nextLine());
-                apples.add(new Apple(this, dop.nextInt(), dop.nextInt(), dop.nextInt()));
+                apples.add(new Apple(this, dop.nextInt(), dop.nextInt(), dop.nextInt(), dop.nextInt()));
             }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
