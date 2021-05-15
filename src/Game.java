@@ -291,6 +291,7 @@ public class Game extends JPanel implements Runnable {
     public void continueGame() {
         loadMap();
         loadHeroes();
+        loadApples();
         repaint();
     }
 
@@ -338,6 +339,21 @@ public class Game extends JPanel implements Runnable {
                 dop = new Scanner(sc.nextLine());
                 Ghost ghost = new Ghost(this, dop.nextInt(), dop.nextInt(), dop.nextInt());
                 ghosts.add(ghost);
+            }
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private void loadApples() {
+        try(FileReader reader = new FileReader("./Saves/apples.txt")) {
+            Scanner sc = new Scanner(reader);
+
+            apples = new Vector<>();
+            while (sc.hasNext()) {
+                Scanner dop = new Scanner(sc.nextLine());
+                apples.add(new Apple(this, dop.nextInt(), dop.nextInt(), dop.nextInt()));
             }
         }
         catch(IOException ex){
