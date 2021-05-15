@@ -6,9 +6,11 @@ public class Apple {
     public int x;
     public int y;
 
-    private Image wall;
+    private Image apple;
+    private Image apple_special;
 
     public int apple_type;
+    public boolean special = false;
 
     public Apple(Game game, int x, int y, int apple_type) {
         this.game = game;
@@ -16,18 +18,27 @@ public class Apple {
         this.y = y;
         this.apple_type = apple_type;
 
-        ImageIcon wall = new ImageIcon(this.getClass().getResource("Images/apple-red.png"));
+        ImageIcon apple = new ImageIcon(this.getClass().getResource("Images/apple-red.png"));
+        ImageIcon apple_special = new ImageIcon(this.getClass().getResource("Images/apple-red-special.png"));
         if (apple_type == 1) {
-            wall = new ImageIcon(this.getClass().getResource("Images/apple-blue.png"));
+            apple = new ImageIcon(this.getClass().getResource("Images/apple-blue.png"));
+            apple_special = new ImageIcon(this.getClass().getResource("Images/apple-blue-special.png"));
         } else if (apple_type == 2) {
-            wall = new ImageIcon(this.getClass().getResource("Images/apple-green.png"));
+            apple = new ImageIcon(this.getClass().getResource("Images/apple-green.png"));
+            apple_special = new ImageIcon(this.getClass().getResource("Images/apple-green-special.png"));
         } else if (apple_type == 3) {
-            wall = new ImageIcon(this.getClass().getResource("Images/apple-orange.png"));
+            apple = new ImageIcon(this.getClass().getResource("Images/apple-orange.png"));
+            apple_special = new ImageIcon(this.getClass().getResource("Images/apple-orange-special.png"));
         }
-        this.wall = wall.getImage();
+        this.apple = apple.getImage();
+        this.apple_special = apple_special.getImage();
     }
 
     public void paint(Graphics g) {
-        g.drawImage(wall, x, y, null);
+        if (special) {
+            g.drawImage(apple_special, x, y, null);
+        } else {
+            g.drawImage(apple, x, y, null);
+        }
     }
 }

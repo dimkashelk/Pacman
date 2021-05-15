@@ -88,6 +88,12 @@ public class Game extends JPanel implements Runnable {
                 }
             }
         }
+
+        for (int i = 0; i < 6; i++) {
+            Apple apple = apples.get(new Random().nextInt(apples.size()));
+            apple.special = true;
+        }
+
         setVisible(true);
         requestFocus();
         KeyboardListener keyboardListener = new KeyboardListener(wnd);
