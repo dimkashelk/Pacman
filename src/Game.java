@@ -305,7 +305,20 @@ public class Game extends JPanel implements Runnable {
                 while (dop.hasNextInt()) {
                     d.add(dop.nextInt());
                 }
-                roads.add(d);
+                if (d.size() > 1) {
+                    roads.add(d);
+                } else {
+                    wall_type = d.get(0);
+                }
+            }
+
+            walls = new Vector<>();
+            for (int i = 0; i < roads.size(); i++) {
+                for (int j = 0; j < roads.get(0).size(); j++) {
+                    if (roads.get(i).get(j) == 0) {
+                        walls.add(new Wall(this, 40 * j, 40 * i, wall_type));
+                    }
+                }
             }
         }
         catch(IOException ex){
