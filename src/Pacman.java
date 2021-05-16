@@ -191,10 +191,18 @@ public class Pacman implements Hero {
     }
 
     public void checkCollisions() {
+        Vector<Ghost> toKill = new Vector<>();
         for (Ghost ghost : game.getGhosts()) {
             if (ghost.x == x && ghost.y == y) {
-                game.setMode(Game.END_GAME);
+                if (mode == Game.START_GAME) {
+                    game.setMode(Game.END_GAME);
+                } else if (mode == Game.EAT_GHOSTS) {
+                    toKill.add(ghost);
+                }
             }
+        }
+        for (Ghost ghost: toKill) {
+            game.killGhost(ghost.x, ghost.y);
         }
     }
 }

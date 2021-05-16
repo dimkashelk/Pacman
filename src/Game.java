@@ -20,7 +20,7 @@ public class Game extends JPanel implements Runnable {
     public static final int END_GAME = -1;
     public static final int EAT_GHOSTS = 2;
     private int steps_eat = 0;
-    private static final int MAX_STEPS_EAT = 6;
+    private static final int MAX_STEPS_EAT = 16;
 
     private int IS_GAMING = 0;
 
@@ -462,5 +462,15 @@ public class Game extends JPanel implements Runnable {
 
     public int getMode() {
         return IS_GAMING;
+    }
+
+    public void killGhost(int x, int y) {
+        for (int i = 0; i < ghosts.size(); i++) {
+            if (x == ghosts.get(i).x && y == ghosts.get(i).y) {
+                ghosts.remove(i);
+                score += 500;
+                break;
+            }
+        }
     }
 }
