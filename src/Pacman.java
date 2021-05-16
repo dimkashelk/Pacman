@@ -115,7 +115,7 @@ public class Pacman implements Hero {
             return;
         }
         findPath();
-        game.moveGhosts();
+        //game.moveGhosts();
         checkCollisions();
         kill(x, y);
     }

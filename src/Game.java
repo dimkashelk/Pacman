@@ -36,11 +36,14 @@ public class Game extends JPanel implements Runnable {
     private int apple_type;
 
     private Image end_game = null;
+    private Image win_game = null;
 
     private int score = 0;
 
     private Font small;
-    private FontMetrics metrics;
+    private Font win;
+    private FontMetrics metrics_small;
+    private FontMetrics metrics_win;
 
     public Game(Window wnd) {
         super(true);
@@ -48,9 +51,12 @@ public class Game extends JPanel implements Runnable {
         this.wnd = wnd;
 
         small = new Font("Helvetica", Font.BOLD, 22);
-        metrics = this.getFontMetrics(small);
+        win = new Font("Impact MT", Font.BOLD, 30);
+        metrics_small = this.getFontMetrics(small);
+        metrics_win = this.getFontMetrics(win);
 
         end_game = new ImageIcon(this.getClass().getResource("Images/endgame.jpg")).getImage();
+        win_game = new ImageIcon(this.getClass().getResource("Images/wingame.jpg")).getImage();
 
         walls = new Vector<>();
         apples = new Vector<>();
@@ -176,7 +182,10 @@ public class Game extends JPanel implements Runnable {
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.BLACK);
         if (apples.size() == 0) {
-
+            g.drawImage(win_game, 0, 0, getWidth(), getHeight(), null);
+            g.setColor(Color.WHITE);
+            g.setFont(win);
+            g.drawString("Your score: " + score, (getWidth() - metrics_small.stringWidth("Score: " + score)) / 2 - metrics_small.stringWidth("Score: " + score) / 2, getHeight() / 11 * 10);
         } else if (IS_GAMING == Game.END_GAME) {
             g.drawImage(end_game, 0, 0, getWidth(), getHeight(), null);
         } else {
@@ -193,7 +202,7 @@ public class Game extends JPanel implements Runnable {
             }
             g.setColor(Color.BLACK);
             g.setFont(small);
-            g.drawString("Score: " + score, getWidth() - metrics.stringWidth("Score: " + score) - 15, metrics.getHeight());
+            g.drawString("Score: " + score, getWidth() - metrics_small.stringWidth("Score: " + score) - 15, metrics_small.getHeight());
         }
     }
 
