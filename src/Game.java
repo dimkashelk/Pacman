@@ -345,9 +345,10 @@ public class Game extends JPanel implements Runnable {
             ghosts = new Vector<>();
             while (sc.hasNext()) {
                 dop = new Scanner(sc.nextLine());
-                Ghost ghost = new Ghost(this, dop.nextInt(), dop.nextInt(), dop.nextInt());
+                Ghost ghost = new Ghost(this, dop.nextInt(), dop.nextInt(), dop.nextInt(), dop.nextInt());
                 ghosts.add(ghost);
             }
+            pacman.checkCollisions();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -365,5 +366,61 @@ public class Game extends JPanel implements Runnable {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    public void newGame() {
+        walls = new Vector<>();
+        apples = new Vector<>();
+
+        roads = new Vector<>();
+        for (int i = 0; i < (int) wnd.getHeight() / 40; i++) {
+            Vector<Integer> dop = new Vector<>();
+            for (int j = 0; j < (int) wnd.getWidth() / 40; j++) {
+                dop.add(0);
+            }
+            roads.add(dop);
+        }
+
+        initArea();
+
+        for (int i = 0; i < roads.size(); i++) {
+            boolean fl = false;
+            for (int j = 0; j < roads.get(0).size(); j++) {
+                if (roads.get(i).get(j) == 1) {
+                    pacman = new Pacman(40 * j, 40 * i, this);
+                    fl = true;
+                    break;
+                }
+            }
+            if (fl) {
+                break;
+            }
+        }
+        ghosts = new Vector<>();
+        int ghost_type = 0;
+        for (int i = roads.size() - 1; i >= 0; i--) {
+            Ghost ghost = null;
+            boolean fl = false;
+            for (int j = roads.get(0).size() - 1; j >= 0; j--) {
+                if (roads.get(i).get(j) == 1) {
+                    ghost = new Ghost(this, 40 * j, 40 * i, ghost_type);
+                    ghost_type += 1;
+                    fl = true;
+                    break;
+                }
+            }
+            if (fl) {
+                ghosts.add(ghost);
+                if (ghosts.size() == 4) {
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < 6; i++) {
+            Apple apple = apples.get(new Random().nextInt(apples.size()));
+            apple.special = 1;
+        }
+        setMode(STOP_GAME);
     }
 }

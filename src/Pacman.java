@@ -190,7 +190,7 @@ public class Pacman implements Hero {
         mode = status;
     }
 
-    private void checkCollisions() {
+    public void checkCollisions() {
         for (Ghost ghost : game.getGhosts()) {
             if (ghost.x == x && ghost.y == y) {
                 game.setMode(Game.END_GAME);

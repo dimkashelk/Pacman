@@ -60,6 +60,7 @@ public class Window extends JFrame {
     }
 
     public void newGame() {
+        pacman.newGame();
         remove(menu);
         add(pacman);
         pacman.requestFocus();
