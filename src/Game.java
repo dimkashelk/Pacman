@@ -280,6 +280,7 @@ public class Game extends JPanel implements Runnable {
                 writer.write("\n");
             }
             writer.write(wall_type + "\n");
+            writer.write(score + "\n");
             writer.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -320,6 +321,8 @@ public class Game extends JPanel implements Runnable {
         try (FileReader reader = new FileReader("./Saves/map.txt")) {
             roads = new Vector<>();
 
+            boolean wall_type_fl = true, score_fl = false;
+
             Scanner sc = new Scanner(reader);
             while (sc.hasNext()) {
                 Scanner dop = new Scanner(sc.nextLine());
@@ -330,7 +333,14 @@ public class Game extends JPanel implements Runnable {
                 if (d.size() > 1) {
                     roads.add(d);
                 } else {
-                    wall_type = d.get(0);
+                    if (wall_type_fl) {
+                        wall_type = d.get(0);
+                        wall_type_fl = false;
+                        score_fl = true;
+                    } else if (score_fl) {
+                        score_fl = false;
+                        score = d.get(0);
+                    }
                 }
             }
 
