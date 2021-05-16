@@ -5,9 +5,13 @@ import java.util.Vector;
 
 public class Pacman implements Hero {
     private final Image pacman_right;
+    private final Image pacman_right_run;
     private final Image pacman_left;
+    private final Image pacman_left_run;
     private final Image pacman_up;
+    private final Image pacman_up_run;
     private final Image pacman_down;
+    private final Image pacman_down_run;
 
     public static int WIDTH;
     public static int HEIGHT;
@@ -32,14 +36,22 @@ public class Pacman implements Hero {
         this.game = game;
 
         ImageIcon pacman_right = new ImageIcon(this.getClass().getResource("Images/pacman_right.png"));
+        ImageIcon pacman_right_run = new ImageIcon(this.getClass().getResource("Images/pacman_right_run.png"));
         ImageIcon pacman_left = new ImageIcon(this.getClass().getResource("Images/pacman_left.png"));
+        ImageIcon pacman_left_run = new ImageIcon(this.getClass().getResource("Images/pacman_left_run.png"));
         ImageIcon pacman_up = new ImageIcon(this.getClass().getResource("Images/pacman_up.png"));
+        ImageIcon pacman_up_run = new ImageIcon(this.getClass().getResource("Images/pacman_up_run.png"));
         ImageIcon pacman_down = new ImageIcon(this.getClass().getResource("Images/pacman_down.png"));
+        ImageIcon pacman_down_run = new ImageIcon(this.getClass().getResource("Images/pacman_down_run.png"));
 
         this.pacman_right = pacman_right.getImage();
+        this.pacman_right_run = pacman_right_run.getImage();
         this.pacman_left = pacman_left.getImage();
+        this.pacman_left_run = pacman_left_run.getImage();
         this.pacman_up = pacman_up.getImage();
+        this.pacman_up_run = pacman_up_run.getImage();
         this.pacman_down = pacman_down.getImage();
+        this.pacman_down_run = pacman_down_run.getImage();
 
         MOVE_X = pacman_right.getIconWidth();
         MOVE_Y = pacman_right.getIconHeight();
@@ -57,14 +69,22 @@ public class Pacman implements Hero {
         this.game = game;
 
         ImageIcon pacman_right = new ImageIcon(this.getClass().getResource("Images/pacman_right.png"));
+        ImageIcon pacman_right_run = new ImageIcon(this.getClass().getResource("Images/pacman_right_run.png"));
         ImageIcon pacman_left = new ImageIcon(this.getClass().getResource("Images/pacman_left.png"));
+        ImageIcon pacman_left_run = new ImageIcon(this.getClass().getResource("Images/pacman_left_run.png"));
         ImageIcon pacman_up = new ImageIcon(this.getClass().getResource("Images/pacman_up.png"));
+        ImageIcon pacman_up_run = new ImageIcon(this.getClass().getResource("Images/pacman_up_run.png"));
         ImageIcon pacman_down = new ImageIcon(this.getClass().getResource("Images/pacman_down.png"));
+        ImageIcon pacman_down_run = new ImageIcon(this.getClass().getResource("Images/pacman_down_run.png"));
 
         this.pacman_right = pacman_right.getImage();
+        this.pacman_right_run = pacman_right_run.getImage();
         this.pacman_left = pacman_left.getImage();
+        this.pacman_left_run = pacman_left_run.getImage();
         this.pacman_up = pacman_up.getImage();
+        this.pacman_up_run = pacman_up_run.getImage();
         this.pacman_down = pacman_down.getImage();
+        this.pacman_down_run = pacman_down_run.getImage();
 
         MOVE_X = pacman_right.getIconWidth();
         MOVE_Y = pacman_right.getIconHeight();
@@ -115,7 +135,7 @@ public class Pacman implements Hero {
             return;
         }
         findPath();
-        //game.moveGhosts();
+        game.moveGhosts();
         checkCollisions();
         kill(x, y);
     }
@@ -127,14 +147,26 @@ public class Pacman implements Hero {
 
     @Override
     public void paint(Graphics g) {
-        if (direction == Game.DOWN) {
-            g.drawImage(pacman_down, x, y, null);
-        } else if (direction == Game.UP) {
-            g.drawImage(pacman_up, x, y, null);
-        } else if (direction == Game.LEFT) {
-            g.drawImage(pacman_left, x, y, null);
-        } else if (direction == Game.RIGHT) {
-            g.drawImage(pacman_right, x, y, null);
+        if (mode == Game.EAT_GHOSTS) {
+            if (direction == Game.DOWN) {
+                g.drawImage(pacman_down_run, x, y, null);
+            } else if (direction == Game.UP) {
+                g.drawImage(pacman_up_run, x, y, null);
+            } else if (direction == Game.LEFT) {
+                g.drawImage(pacman_left_run, x, y, null);
+            } else if (direction == Game.RIGHT) {
+                g.drawImage(pacman_right_run, x, y, null);
+            }
+        } else {
+            if (direction == Game.DOWN) {
+                g.drawImage(pacman_down, x, y, null);
+            } else if (direction == Game.UP) {
+                g.drawImage(pacman_up, x, y, null);
+            } else if (direction == Game.LEFT) {
+                g.drawImage(pacman_left, x, y, null);
+            } else if (direction == Game.RIGHT) {
+                g.drawImage(pacman_right, x, y, null);
+            }
         }
     }
 
@@ -201,7 +233,7 @@ public class Pacman implements Hero {
                 }
             }
         }
-        for (Ghost ghost: toKill) {
+        for (Ghost ghost : toKill) {
             game.killGhost(ghost.x, ghost.y);
         }
     }
