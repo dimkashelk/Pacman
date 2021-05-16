@@ -88,7 +88,11 @@ public class Window extends JFrame {
 
     public void continueGame() {
         pacman.continueGame();
-        newGame();
+        remove(menu);
+        add(pacman);
+        pacman.requestFocus();
+        pacman.requestFocusInWindow();
+        revalidate();
     }
 
     public void saveGame() {
