@@ -186,7 +186,15 @@ public class Game extends JPanel implements Runnable {
             g.setColor(Color.WHITE);
             g.setFont(win);
             g.drawString("Your score: " + score, (getWidth() - metrics_small.stringWidth("Score: " + score)) / 2 - metrics_small.stringWidth("Score: " + score) / 2, getHeight() / 11 * 10);
-        } else if (IS_GAMING == Game.END_GAME) {
+        } else if (ghosts.size() == 0) {
+            score += 100 * apples.size();
+            g.drawImage(win_game, 0, 0, getWidth(), getHeight(), null);
+            apples = new Vector<>();
+            g.setColor(Color.WHITE);
+            g.setFont(win);
+            g.drawString("Your score: " + score, (getWidth() - metrics_small.stringWidth("Score: " + score)) / 2 - metrics_small.stringWidth("Score: " + score) / 2, getHeight() / 11 * 10);
+        }
+        else if (IS_GAMING == Game.END_GAME) {
             g.drawImage(end_game, 0, 0, getWidth(), getHeight(), null);
         } else {
             for (Wall wall : walls) {
