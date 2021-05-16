@@ -19,6 +19,8 @@ public class Game extends JPanel implements Runnable {
     public static final int STOP_GAME = 0;
     public static final int END_GAME = -1;
     public static final int EAT_GHOSTS = 2;
+    private int steps_eat = 0;
+    private static final int MAX_STEPS_EAT = 6;
 
     private int IS_GAMING = 0;
 
@@ -208,6 +210,13 @@ public class Game extends JPanel implements Runnable {
     }
 
     public void move(int direction) {
+        if (IS_GAMING == Game.EAT_GHOSTS) {
+            steps_eat += 1;
+            if (steps_eat == Game.MAX_STEPS_EAT) {
+                setMode(Game.START_GAME);
+                steps_eat = 0;
+            }
+        }
         pacman.move(direction);
     }
 
@@ -229,6 +238,9 @@ public class Game extends JPanel implements Runnable {
     public void killApple(int x, int y) {
         for (int i = 0; i < apples.size(); i++) {
             if (x == apples.get(i).x && y == apples.get(i).y) {
+                if (apples.get(i).special == 1) {
+                    setMode(Game.EAT_GHOSTS);
+                }
                 apples.remove(i);
                 score += 100;
                 break;
@@ -446,5 +458,9 @@ public class Game extends JPanel implements Runnable {
             apple.special = 1;
         }
         setMode(STOP_GAME);
+    }
+
+    public int getMode() {
+        return IS_GAMING;
     }
 }
