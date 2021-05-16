@@ -35,10 +35,18 @@ public class Game extends JPanel implements Runnable {
 
     private Image end_game = null;
 
+    private int score = 0;
+
+    private Font small;
+    private FontMetrics metrics;
+
     public Game(Window wnd) {
         super(true);
 
         this.wnd = wnd;
+
+        small = new Font("Helvetica", Font.BOLD, 22);
+        metrics = this.getFontMetrics(small);
 
         end_game = new ImageIcon(this.getClass().getResource("Images/endgame.jpg")).getImage();
 
@@ -181,6 +189,9 @@ public class Game extends JPanel implements Runnable {
             for (Ghost ghost : ghosts) {
                 ghost.paint(g);
             }
+            g.setColor(Color.BLACK);
+            g.setFont(small);
+            g.drawString("Score: " + score, getWidth() - metrics.stringWidth("Score: " + score) - 15, metrics.getHeight());
         }
     }
 
@@ -219,6 +230,7 @@ public class Game extends JPanel implements Runnable {
         for (int i = 0; i < apples.size(); i++) {
             if (x == apples.get(i).x && y == apples.get(i).y) {
                 apples.remove(i);
+                score += 100;
                 break;
             }
         }
@@ -369,6 +381,8 @@ public class Game extends JPanel implements Runnable {
     }
 
     public void newGame() {
+        score = 0;
+
         walls = new Vector<>();
         apples = new Vector<>();
 
