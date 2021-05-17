@@ -29,6 +29,7 @@ public class Pacman implements Hero {
     private Vector<Vector<Integer>> mas;
 
     private static int mode = Game.STOP_GAME;
+    public int lifes = 3;
 
     public Pacman(int x, int y, Game game) {
         this.x = x;
@@ -135,6 +136,7 @@ public class Pacman implements Hero {
             return;
         }
         findPath();
+        checkCollisions();
         game.moveGhosts();
         checkCollisions();
         kill(x, y);
@@ -227,7 +229,11 @@ public class Pacman implements Hero {
         for (Ghost ghost : game.getGhosts()) {
             if (ghost.x == x && ghost.y == y) {
                 if (mode == Game.START_GAME) {
-                    game.setMode(Game.END_GAME);
+                    lifes -= 1;
+                    game.beginPosPacman();
+                    if (lifes == 0) {
+                        game.setMode(Game.END_GAME);
+                    }
                 } else if (mode == Game.EAT_GHOSTS) {
                     toKill.add(ghost);
                 }

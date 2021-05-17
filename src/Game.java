@@ -211,6 +211,7 @@ public class Game extends JPanel implements Runnable {
             g.setColor(Color.BLACK);
             g.setFont(small);
             g.drawString("Score: " + score, getWidth() - metrics_small.stringWidth("Score: " + score) - 15, metrics_small.getHeight());
+            g.drawString("Lifes: " + pacman.lifes,  15, metrics_small.getHeight());
         }
     }
 
@@ -487,6 +488,18 @@ public class Game extends JPanel implements Runnable {
                 ghosts.remove(i);
                 score += 500;
                 break;
+            }
+        }
+    }
+
+    public void beginPosPacman() {
+        for (int i = 0; i < roads.size(); i++) {
+            for (int j = 0; j < roads.get(0).size(); j++) {
+                if (roads.get(i).get(j) == 1) {
+                    pacman.x = 40 * j;
+                    pacman.y = 40 * i;
+                    return;
+                }
             }
         }
     }
